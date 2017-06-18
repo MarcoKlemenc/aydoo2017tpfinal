@@ -1,4 +1,3 @@
-require 'json'
 require 'sinatra'
 
 require_relative 'model/archivador_repositorio'
@@ -6,6 +5,7 @@ require_relative 'model/repositorio_calendarios'
 require_relative 'model/calendario'
 require_relative 'model/evento'
 require_relative 'model/evento_recurrente'
+require_relative 'model/formateador'
 require_relative 'model/frecuencia_diaria'
 require_relative 'model/frecuencia_semanal'
 require_relative 'model/frecuencia_mensual'
@@ -20,16 +20,17 @@ frecuencias = {
 }
 
 repositorio_calendarios = ArchivadorRepositorio.cargar || RepositorioCalendarios.new
+formateador = Formateador.new
 
 post '/calendarios' do
   begin
     request.body.rewind
-    body = JSON.parse request.body.read
+    body = formateador.leer(request.body.read)
     nombre_calendario = body['nombre']
     calendario = Calendario.new(nombre_calendario)
     repositorio_calendarios.almacenar_calendario(calendario)
     ArchivadorRepositorio.guardar(repositorio_calendarios)
-    JSON.pretty_generate(calendario.to_h)
+    formateador.dar_formato(calendario.to_h)
   rescue  ExcepcionUnicidadCalendario,
           ExcepcionNombreCalendario
     status 400
@@ -49,14 +50,14 @@ end
 get '/calendarios' do
   salida = []
   repositorio_calendarios.calendarios.values.each {|calendario| salida << calendario.to_h}
-  JSON.pretty_generate(salida)
+  formateador.dar_formato(salida)
 end
 
 get '/calendarios/:nombre' do
   begin
     nombre_calendario = params[:nombre]
     calendario = repositorio_calendarios.obtener_calendario(nombre_calendario)
-    JSON.pretty_generate(calendario.to_h)
+    formateador.dar_formato(calendario.to_h)
   rescue ExcepcionCalendarioInexistente
     status 404
   end
@@ -65,7 +66,7 @@ end
 post '/eventos' do
   begin
     request.body.rewind
-    body = JSON.parse request.body.read
+    body = formateador.leer(request.body.read)
     id_evento = body['id']
     nombre_evento = body['nombre']
     inicio_evento = DateTime.parse(body['inicio'])
@@ -108,7 +109,7 @@ end
 put '/eventos' do
   begin
     request.body.rewind
-    body = JSON.parse request.body.read
+    body = formateador.leer(request.body.read)
     id_evento = body['id']
 
     repositorio_evento = nil
@@ -199,7 +200,7 @@ get '/eventos' do
     end
     salida = []
     eventos.each {|evento| salida << evento.to_h}
-    JSON.pretty_generate(salida)
+    formateador.dar_formato(salida)
   rescue ExcepcionCalendarioInexistente
     status 400
   end
@@ -215,7 +216,7 @@ get '/eventos/:id' do
     end
     raise ExcepcionEventoInexistente unless repositorio_evento
     evento = repositorio_evento.obtener_evento(id_evento)
-    JSON.pretty_generate(evento.to_h)
+    formateador.dar_formato(evento.to_h)
   rescue ExcepcionEventoInexistente
     status 404
   end
