@@ -6,21 +6,12 @@ require_relative 'model/calendario'
 require_relative 'model/evento'
 require_relative 'model/evento_recurrente'
 require_relative 'model/formateador'
-require_relative 'model/frecuencia_diaria'
-require_relative 'model/frecuencia_semanal'
-require_relative 'model/frecuencia_mensual'
-require_relative 'model/frecuencia_anual'
+require_relative 'model/mapeador_frecuencias'
 require_relative 'model/validador_unicidad_evento'
-
-frecuencias = {
-  "diaria" => FrecuenciaDiaria.new,
-  "semanal" => FrecuenciaSemanal.new,
-  "mensual" => FrecuenciaMensual.new,
-  "anual" => FrecuenciaAnual.new
-}
 
 repositorio_calendarios = ArchivadorRepositorio.cargar || RepositorioCalendarios.new
 formateador = Formateador.new
+mapeador = MapeadorFrecuencias.new
 
 post '/calendarios' do
   begin
@@ -75,7 +66,7 @@ post '/eventos' do
     calendario = repositorio_calendarios.obtener_calendario(nombre_calendario)
     if body.key?('recurrencia')
       frecuencia_evento = body['recurrencia']['frecuencia']
-      frecuencia = frecuencias[frecuencia_evento]
+      frecuencia = mapeador.frecuencias[frecuencia_evento]
       fin_recurrencia_evento = DateTime.parse(body['recurrencia']['fin'])
       evento = EventoRecurrente.new(
         id_evento,
@@ -130,7 +121,7 @@ put '/eventos' do
     inicio_evento = body.key?('inicio') ? DateTime.parse(body['inicio']) : inicio_original
     fin_evento = body.key?('fin') ? DateTime.parse(body['fin']) : fin_original
 
-    frecuencia_evento = body.key?('recurrencia') && body['recurrencia'].key?('frecuencia') ? frecuencias[body['recurrencia']['frecuencia']] : frecuencia_original
+    frecuencia_evento = body.key?('recurrencia') && body['recurrencia'].key?('frecuencia') ? mapeador.frecuencias[body['recurrencia']['frecuencia']] : frecuencia_original
     fin_recurrencia = body.key?('recurrencia') && body['recurrencia'].key?('fin') ? DateTime.parse(body['recurrencia']['fin']) : fin_recurrencia_original
 
     if frecuencia_evento && fin_recurrencia
