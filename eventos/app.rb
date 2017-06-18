@@ -8,10 +8,12 @@ require_relative 'model/evento_recurrente'
 require_relative 'model/formateador'
 require_relative 'model/mapeador_frecuencias'
 require_relative 'model/validador_unicidad_evento'
+require_relative 'model/cadena_generacion_eventos'
 
 repositorio_calendarios = ArchivadorRepositorio.cargar || RepositorioCalendarios.new
 formateador = Formateador.new
 mapeador = MapeadorFrecuencias.new
+cadena = CadenaGeneracionEventos.new
 
 post '/calendarios' do
   begin
@@ -64,26 +66,13 @@ post '/eventos' do
     fin_evento = DateTime.parse(body['fin'])
     nombre_calendario = body['calendario']
     calendario = repositorio_calendarios.obtener_calendario(nombre_calendario)
+    params = body
+    params['inicio'] = DateTime.parse(body['inicio'])
+    params['fin'] = DateTime.parse(body['fin'])
     if body.key?('recurrencia')
-      frecuencia_evento = body['recurrencia']['frecuencia']
-      frecuencia = mapeador.frecuencias[frecuencia_evento]
-      fin_recurrencia_evento = DateTime.parse(body['recurrencia']['fin'])
-      evento = EventoRecurrente.new(
-        id_evento,
-        nombre_evento,
-        inicio_evento,
-        fin_evento,
-        frecuencia,
-        fin_recurrencia_evento
-      )
-    else
-      evento = Evento.new(
-        id_evento,
-        nombre_evento,
-        inicio_evento,
-        fin_evento
-      )
+      params['recurrencia']['fin'] = DateTime.parse(body['recurrencia']['fin'])
     end
+    evento = cadena.generar_evento(params)
     ValidadorUnicidadEvento.validar(repositorio_calendarios.calendarios.values, evento.id)
     calendario.almacenar_evento(evento)
     ArchivadorRepositorio.guardar(repositorio_calendarios)
