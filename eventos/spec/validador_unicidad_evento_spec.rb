@@ -5,9 +5,8 @@ describe 'Validador Unicidad Evento' do
   it 'Deberia validar un id en un repositorio sin calendarios' do
     evento = double('Evento')
     allow(evento).to receive(:id).and_return('id_1')
-    repositorio = double('Repositorio')
-    allow(repositorio).to receive(:calendarios).and_return({})
-    ValidadorUnicidadEvento.validar(repositorio, evento.id)
+    calendarios = []
+    ValidadorUnicidadEvento.validar(calendarios, evento.id)
   end
 
   it 'Deberia validar un id en un repositorio con un calendario sin eventos' do
@@ -15,9 +14,8 @@ describe 'Validador Unicidad Evento' do
     allow(evento).to receive(:id).and_return('id_1')
     calendario = double('Calendario')
     allow(calendario).to receive(:eventos).and_return({})
-    repositorio = double('Repositorio')
-    allow(repositorio).to receive(:calendarios).and_return({id: calendario})
-    ValidadorUnicidadEvento.validar(repositorio, evento.id)
+    calendarios = [calendario]
+    ValidadorUnicidadEvento.validar(calendarios, evento.id)
   end
 
   it 'Error al validar un id existente' do
@@ -25,10 +23,9 @@ describe 'Validador Unicidad Evento' do
     allow(evento).to receive(:id).and_return('id_1')
     calendario = double('Calendario')
     allow(calendario).to receive(:eventos).and_return({"id_1" => evento})
-    repositorio = double('Repositorio')
-    allow(repositorio).to receive(:calendarios).and_return({id: calendario})
+    calendarios = [calendario]
     expect do
-      ValidadorUnicidadEvento.validar(repositorio, evento.id)
+      ValidadorUnicidadEvento.validar(calendarios, evento.id)
     end.to raise_error(ExcepcionUnicidadGlobalEvento)
   end
 end
