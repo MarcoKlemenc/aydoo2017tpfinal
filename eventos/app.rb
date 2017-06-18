@@ -60,19 +60,9 @@ post '/eventos' do
   begin
     request.body.rewind
     body = formateador.leer(request.body.read)
-    id_evento = body['id']
-    nombre_evento = body['nombre']
-    inicio_evento = DateTime.parse(body['inicio'])
-    fin_evento = DateTime.parse(body['fin'])
     nombre_calendario = body['calendario']
     calendario = repositorio_calendarios.obtener_calendario(nombre_calendario)
-    params = body
-    params['inicio'] = DateTime.parse(body['inicio'])
-    params['fin'] = DateTime.parse(body['fin'])
-    if body.key?('recurrencia')
-      params['recurrencia']['fin'] = DateTime.parse(body['recurrencia']['fin'])
-    end
-    evento = cadena.generar_evento(params)
+    evento = cadena.generar_evento(body)
     ValidadorUnicidadEvento.validar(repositorio_calendarios.calendarios.values, evento.id)
     calendario.almacenar_evento(evento)
     ArchivadorRepositorio.guardar(repositorio_calendarios)
