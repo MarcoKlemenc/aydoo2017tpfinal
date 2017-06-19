@@ -64,7 +64,9 @@ post '/eventos' do
     calendario = repositorio_calendarios.obtener_calendario(nombre_calendario)
     body['inicio'] = DateTime.parse(body['inicio'])
     body['fin'] = DateTime.parse(body['fin'])
-    body['recurrencia']['fin'] = DateTime.parse(body['recurrencia']['fin']) if body['recurrencia']['fin']
+    if body['recurrencia']
+      body['recurrencia']['fin'] = DateTime.parse(body['recurrencia']['fin'])
+    end
     evento = cadena.generar_evento(body)
     ValidadorUnicidadEvento.validar(repositorio_calendarios.calendarios.values, evento.id)
     calendario.almacenar_evento(evento)
@@ -99,30 +101,17 @@ put '/eventos' do
     frecuencia_original = evento_original.instance_variable_defined?(:@frecuencia) && evento_original.frecuencia
     fin_recurrencia_original = evento_original.instance_variable_defined?(:@fin_recurrencia) && evento_original.fin_recurrencia
 
-    nombre_evento = body.key?('nombre') ? body['nombre'] : nombre_original
-    inicio_evento = body.key?('inicio') ? DateTime.parse(body['inicio']) : inicio_original
-    fin_evento = body.key?('fin') ? DateTime.parse(body['fin']) : fin_original
+    body['nombre'] = body.key?('nombre') ? body['nombre'] : nombre_original
+    body['inicio'] = body.key?('inicio') ? DateTime.parse(body['inicio']) : inicio_original
+    body['fin'] = body.key?('fin') ? DateTime.parse(body['fin']) : fin_original
 
-    frecuencia_evento = body.key?('recurrencia') && body['recurrencia'].key?('frecuencia') ? mapeador.frecuencias[body['recurrencia']['frecuencia']] : frecuencia_original
-    fin_recurrencia = body.key?('recurrencia') && body['recurrencia'].key?('fin') ? DateTime.parse(body['recurrencia']['fin']) : fin_recurrencia_original
-
-    if frecuencia_evento && fin_recurrencia
-      evento_reemplazante = EventoRecurrente.new(
-        id_evento,
-        nombre_evento,
-        inicio_evento,
-        fin_evento,
-        frecuencia_evento,
-        fin_recurrencia
-      )
-    else
-      evento_reemplazante = Evento.new(
-          id_evento,
-          nombre_evento,
-          inicio_evento,
-          fin_evento
-      )
+    if body.key?('recurrencia')
+      body['recurrencia']['frecuencia'] = body.key?('recurrencia') && body['recurrencia'].key?('frecuencia') ? mapeador.frecuencias[body['recurrencia']['frecuencia']] : frecuencia_original
+      body['recurrencia']['fin'] = body.key?('recurrencia') && body['recurrencia'].key?('fin') ? DateTime.parse(body['recurrencia']['fin']) : fin_recurrencia_original
     end
+    
+    evento = cadena.generar_evento(body)
+    
     repositorio_evento.eliminar_evento(id_evento)
     begin
       repositorio_evento.almacenar_evento(evento_reemplazante)

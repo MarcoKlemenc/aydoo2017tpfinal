@@ -9,8 +9,8 @@ class GeneradorEventoComun < GeneradorEvento
       evento = Evento.new(
         params['id'],
         params['nombre'],
-        DateTime.parse(params['inicio']),
-        DateTime.parse(params['fin'])
+        params['inicio'],
+        params['fin']
       )
       return evento
     else super(params)
