@@ -13,4 +13,13 @@ describe 'Generador Evento Comun' do
     expect(generador.generar_evento(params).nombre).to eq "Evento 1"
   end
   
+  it 'Llama al generar del siguiente al no pasarle id' do
+    hash = {}
+    dos = 2
+    siguiente = double('Siguiente generador')
+    allow(siguiente).to receive(:generar_evento).and_return(dos)
+    generador = GeneradorEventoComun.new (siguiente)
+    expect(generador.generar_evento(hash)).to eq dos
+  end
+  
 end

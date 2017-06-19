@@ -5,13 +5,16 @@ require_relative '../model/generador_evento'
 class GeneradorEventoComun < GeneradorEvento
   
   def generar_evento(params)
-    evento = Evento.new(
+    if params.key?('id')
+      evento = Evento.new(
         params['id'],
         params['nombre'],
         DateTime.parse(params['inicio']),
         DateTime.parse(params['fin'])
       )
-    return evento
+      return evento
+    else super(params)
+    end
   end
   
 end

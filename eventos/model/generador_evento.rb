@@ -7,7 +7,11 @@ class GeneradorEvento
   end
   
   def generar_evento(params)
-    return siguiente.generar_evento(params)
+    if siguiente.nil?
+      return nil
+    else
+      return siguiente.generar_evento(params)
+    end
   end
   
 end
