@@ -6,12 +6,12 @@ describe 'Generador Evento Recurrente' do
     uno = 1
     generador = GeneradorEventoRecurrente.new (uno)
     recurrencia = {'frecuencia' => "semanal",
-                   'fin' => "2017-04-01T12:00:00-03:00",
+                   'fin' => DateTime.now + 1
                   }
     params = {'id' => "id_1",
               'nombre' => "Evento 1",
-              'inicio' => "2017-01-01T12:00:00-03:00",
-              'fin' => "2017-01-01T16:00:00-03:00",
+              'inicio' => DateTime.now,
+              'fin' => DateTime.now,
               'recurrencia' => recurrencia
              }
     expect(generador.generar_evento(params).nombre).to eq "Evento 1"

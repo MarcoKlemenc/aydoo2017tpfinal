@@ -9,14 +9,13 @@ class GeneradorEventoRecurrente < GeneradorEvento
       mapeador = MapeadorFrecuencias.new
       frecuencia_evento = params['recurrencia']['frecuencia']
       frecuencia = mapeador.frecuencias[frecuencia_evento]
-      fin_recurrencia_evento = DateTime.parse(params['recurrencia']['fin'])
       evento = EventoRecurrente.new(
         params['id'],
         params['nombre'],
-        DateTime.parse(params['inicio']),
-        DateTime.parse(params['fin']),
+        params['inicio'],
+        params['fin'],
         frecuencia,
-        fin_recurrencia_evento
+        params['recurrencia']['fin']
       )
       return evento
     else super(params)
