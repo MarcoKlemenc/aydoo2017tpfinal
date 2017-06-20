@@ -1,5 +1,7 @@
 require 'sinatra'
 
+require_relative 'model/repositorio_recursos'
+require_relative 'model/recurso'
 require_relative 'model/archivador_repositorio'
 require_relative 'model/repositorio_calendarios'
 require_relative 'model/calendario'
