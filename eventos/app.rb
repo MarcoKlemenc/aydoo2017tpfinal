@@ -13,9 +13,10 @@ require_relative 'model/validador_unicidad_evento'
 require_relative 'model/cadena_generacion_eventos'
 
 archivo_calendarios = "calendarios.txt"
+archivo_recursos = "recursos.txt"
 
 repositorio_calendarios = ArchivadorRepositorio.cargar(archivo_calendarios) || RepositorioCalendarios.new
-repositorio_recursos = RepositorioRecursos.new
+repositorio_recursos = ArchivadorRepositorio.cargar(archivo_recursos) || RepositorioRecursos.new
 formateador = Formateador.new
 mapeador = MapeadorFrecuencias.new
 cadena = CadenaGeneracionEventos.new
@@ -227,6 +228,7 @@ post '/recursos' do
     nombre_recurso = body['nombre']
     recurso = Recurso.new(nombre_recurso)
     repositorio_recursos.almacenar_recurso(recurso)
+    ArchivadorRepositorio.guardar(repositorio_recursos, archivo_recursos)
     formateador.dar_formato(recurso.to_h)
   rescue  ExcepcionUnicidadRecurso
     status 400
