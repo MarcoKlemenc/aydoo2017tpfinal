@@ -81,6 +81,7 @@ post '/eventos' do
     ValidadorUnicidadEvento.validar(repositorio_calendarios.calendarios.values, evento.id)
     calendario.almacenar_evento(evento)
     ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
+    ArchivadorRepositorio.guardar(repositorio_recursos, archivo_recursos)
   rescue  ExcepcionCalendarioInexistente,
           ExcepcionIntervaloErroneo,
           ExcepcionIntervaloMaximo,
