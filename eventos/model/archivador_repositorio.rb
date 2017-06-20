@@ -1,16 +1,14 @@
-NOMBRE_ARCHIVO = 'repositorio.txt'.freeze
-
 # Encargada de la persistencia del repositorio
 class ArchivadorRepositorio
-  def self.cargar
-    if File.file?(NOMBRE_ARCHIVO)
-      archivo= File.open(NOMBRE_ARCHIVO, "r")
+  def self.cargar(archivo)
+    if File.file?(archivo)
+      archivo= File.open(archivo, "r")
       Marshal.load(archivo)
     end
   end
 
-  def self.guardar(repositorio)
-    archivo = File.open(NOMBRE_ARCHIVO, "w")
+  def self.guardar(repositorio, archivo)
+    archivo = File.open(archivo, "w")
     Marshal.dump(repositorio, archivo)
     archivo.close
   end

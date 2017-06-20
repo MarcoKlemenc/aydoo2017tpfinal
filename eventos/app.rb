@@ -12,7 +12,9 @@ require_relative 'model/mapeador_frecuencias'
 require_relative 'model/validador_unicidad_evento'
 require_relative 'model/cadena_generacion_eventos'
 
-repositorio_calendarios = ArchivadorRepositorio.cargar || RepositorioCalendarios.new
+archivo_calendarios = "calendarios.txt"
+
+repositorio_calendarios = ArchivadorRepositorio.cargar(archivo_calendarios) || RepositorioCalendarios.new
 repositorio_recursos = RepositorioRecursos.new
 formateador = Formateador.new
 mapeador = MapeadorFrecuencias.new
@@ -25,7 +27,7 @@ post '/calendarios' do
     nombre_calendario = body['nombre']
     calendario = Calendario.new(nombre_calendario)
     repositorio_calendarios.almacenar_calendario(calendario)
-    ArchivadorRepositorio.guardar(repositorio_calendarios)
+    ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
     formateador.dar_formato(calendario.to_h)
   rescue  ExcepcionUnicidadCalendario,
           ExcepcionNombreCalendario
@@ -37,7 +39,7 @@ delete '/calendarios/:nombre' do
   begin
     nombre_calendario = params[:nombre]
     repositorio_calendarios.eliminar_calendario(nombre_calendario)
-    ArchivadorRepositorio.guardar(repositorio_calendarios)
+    ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
   rescue ExcepcionCalendarioInexistente
     status 404
   end
@@ -77,13 +79,14 @@ post '/eventos' do
     evento = cadena.generar_evento(body)
     ValidadorUnicidadEvento.validar(repositorio_calendarios.calendarios.values, evento.id)
     calendario.almacenar_evento(evento)
-    ArchivadorRepositorio.guardar(repositorio_calendarios)
+    ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
   rescue  ExcepcionCalendarioInexistente,
           ExcepcionIntervaloErroneo,
           ExcepcionIntervaloMaximo,
           ExcepcionUnicidadEvento,
           ExcepcionSolapamientoEvento,
           ExcepcionUnicidadGlobalEvento,
+          ExcepcionRecursoInexistente,
           ExcepcionSolapamientoRecurso
     status 400
   end
@@ -127,7 +130,7 @@ put '/eventos' do
       repositorio_evento.almacenar_evento(evento_original)
       status 400
     end
-    ArchivadorRepositorio.guardar(repositorio_calendarios)
+    ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
 
   rescue  ExcepcionCalendarioInexistente,
           ExcepcionEventoInexistente,
@@ -149,7 +152,7 @@ delete '/eventos/:id' do
     evento = repositorio_evento.obtener_evento(id_evento)
     evento.eliminar_reservas
     repositorio_evento.eliminar_evento(id_evento)
-    ArchivadorRepositorio.guardar(repositorio_calendarios)
+    ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
   rescue
     status 404
   end
