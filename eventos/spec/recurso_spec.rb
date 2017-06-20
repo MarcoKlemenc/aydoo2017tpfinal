@@ -12,5 +12,12 @@ describe 'Recurso' do
     recurso = Recurso.new(nombre)
     expect(recurso.nombre).to eq nombre
   end
+  
+  it 'Error al crear un recurso sin nombre' do
+    expect do
+      Recurso.new('')
+    end.to raise_error(ExcepcionNombreRecurso)
+  end
+
 
 end
