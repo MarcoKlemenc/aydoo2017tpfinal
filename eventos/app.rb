@@ -216,6 +216,7 @@ delete '/recursos/:nombre' do
       end
     end
     repositorio_recursos.eliminar_recurso(nombre_recurso)
+    ArchivadorRepositorio.guardar(repositorio_recursos, archivo_recursos)
   rescue ExcepcionRecursoInexistente
     status 404
   end
