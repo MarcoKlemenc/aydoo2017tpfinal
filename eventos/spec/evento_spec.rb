@@ -9,6 +9,15 @@ describe 'Evento' do
     fin = inicio
     Evento.new(id, nombre, inicio, fin)
   end
+  
+  it 'Se debe crear un evento a partir de un id, nombre, inicio y fin sin recurso' do
+    id = 'id_1'
+    nombre = 'Evento 1'
+    inicio = DateTime.now
+    fin = inicio
+    evento = Evento.new(id, nombre, inicio, fin)
+    expect(evento.recurso).to eq nil
+  end
 
   it 'Deberia poder obtener el id' do
     id = 'id_1'
@@ -53,6 +62,17 @@ describe 'Evento' do
     fin = inicio
     evento = Evento.new(id, nombre, inicio, fin)
     expect(evento.fin).to eq fin
+  end
+  
+  it 'Deberia poder obtener el recurso' do
+    id = 'id_1'
+    nombre = 'Evento 1'
+    inicio = DateTime.now
+    fin = inicio
+    recurso = double('Recurso 1')
+    allow(recurso).to receive(:nombre).and_return('Recurso 1')
+    evento = Evento.new(id, nombre, inicio, fin, recurso)
+    expect(evento.recurso.nombre).to eq 'Recurso 1'
   end
 
   it 'Deberia poder obtener el intervalo del evento' do

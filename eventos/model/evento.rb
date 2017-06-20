@@ -6,7 +6,7 @@ CONVERSOR_HORAS = (1 / 24.0)
 # Representa un evento. Limitado por un inicio y un fin
 class Evento
   attr_reader :id
-  attr_accessor :nombre, :inicio, :fin
+  attr_accessor :nombre, :inicio, :fin, :recurso
 
   def to_h
     {
@@ -17,12 +17,13 @@ class Evento
     }
   end
 
-  def initialize(id, nombre, inicio, fin)
+  def initialize(id, nombre, inicio, fin, recurso=nil)
     validar_intervalo(inicio, fin)
     @id = id
     @nombre = nombre
     @inicio = inicio
     @fin = fin
+    @recurso = recurso
   end
 
   def inicio=(value)
