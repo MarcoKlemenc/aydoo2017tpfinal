@@ -45,5 +45,20 @@ describe 'Repositorio Recursos' do
       repositorio.obtener_recurso('inexistente')
     end.to raise_error(ExcepcionRecursoInexistente)
   end
+  
+  it 'Deberia poder eliminar un recurso existente' do
+    recurso = double('Recurso 1')
+    allow(recurso).to receive(:nombre).and_return('Recurso 1')
+    repositorio = RepositorioRecursos.new
+    recurso = repositorio.almacenar_recurso(recurso)
+    repositorio.eliminar_recurso(recurso.nombre)
+  end
+
+  it 'Error al eliminar un recurso inexistente' do
+    repositorio = RepositorioRecursos.new
+    expect do
+      repositorio.eliminar_recurso('inexistente')
+    end.to raise_error(ExcepcionRecursoInexistente)
+  end
 
 end
