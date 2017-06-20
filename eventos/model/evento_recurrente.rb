@@ -19,8 +19,8 @@ class EventoRecurrente < Evento
     }
   end
 
-  def initialize(id, nombre, inicio, fin, frecuencia, fin_recurrencia)
-    super(id, nombre, inicio, fin)
+  def initialize(id, nombre, inicio, fin, frecuencia, fin_recurrencia, recurso=nil)
+    super(id, nombre, inicio, fin, recurso)
     validar_intervalo_recurrencia(inicio, fin_recurrencia)
     @frecuencia = frecuencia
     @fin_recurrencia = fin_recurrencia
