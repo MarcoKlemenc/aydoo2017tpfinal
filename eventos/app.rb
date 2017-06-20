@@ -39,8 +39,13 @@ end
 delete '/calendarios/:nombre' do
   begin
     nombre_calendario = params[:nombre]
+    calendario = repositorio_calendarios.obtener_calendario(nombre_calendario)
+    calendario.eventos.values.each do |e|
+      e.eliminar_reservas
+    end
     repositorio_calendarios.eliminar_calendario(nombre_calendario)
     ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
+    ArchivadorRepositorio.guardar(repositorio_recursos, archivo_recursos)
   rescue ExcepcionCalendarioInexistente
     status 404
   end
