@@ -8,6 +8,12 @@ class Recurso
   attr_reader :nombre
   attr_reader :reservas
 
+  def to_h
+    {
+      "nombre" => @nombre
+    }
+  end
+  
   def initialize(nombre)
     validar_nombre(nombre)
     @nombre = nombre
