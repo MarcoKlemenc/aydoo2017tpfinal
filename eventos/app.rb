@@ -155,6 +155,7 @@ delete '/eventos/:id' do
     evento.eliminar_reservas
     repositorio_evento.eliminar_evento(id_evento)
     ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
+    ArchivadorRepositorio.guardar(repositorio_recursos, archivo_recursos)
   rescue
     status 404
   end
