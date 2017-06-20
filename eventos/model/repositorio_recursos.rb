@@ -19,4 +19,8 @@ class RepositorioRecursos
     raise ExcepcionUnicidadRecurso if @recursos.key?(identificacion)
   end
   
+  def obtener_recurso(identificacion)
+    @recursos[identificacion] || raise(ExcepcionRecursoInexistente)
+  end
+  
 end
