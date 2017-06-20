@@ -200,4 +200,18 @@ get '/eventos/:id' do
     end
   end
   
+  post '/recursos' do
+    begin
+      request.body.rewind
+      body = formateador.leer(request.body.read)
+      nombre_recurso = body['nombre']
+      recurso = Recurso.new(nombre_recurso)
+      repositorio_recursos.almacenar_recurso(recurso)
+      formateador.dar_formato(recurso.to_h)
+    rescue  ExcepcionUnicidadRecurso
+      status 400
+    end
+  end
+  
+  
 end
