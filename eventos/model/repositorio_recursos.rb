@@ -11,6 +11,12 @@ class RepositorioRecursos
 
   def almacenar_recurso(recurso)
     identificacion = recurso.nombre
-    comprobar_unicidad_recurso(recurso)
+    comprobar_unicidad_recurso(identificacion)
     @recursos[identificacion] = recurso
   end
+  
+  def comprobar_unicidad_recurso(identificacion)
+    raise ExcepcionUnicidadRecurso if @recursos.key?(identificacion)
+  end
+  
+end
