@@ -1,4 +1,5 @@
 require_relative '../model/excepcion_nombre_recurso'
+require_relative '../model/excepcion_solapamiento_recurso'
 
 NOMBRE_VACIO = ''.freeze
 
@@ -14,6 +15,7 @@ class Recurso
   end
   
   def reservar(inicio, fin)
+    comprobar_solapamiento_recurso(inicio, fin)
     @reservas << (inicio..fin)
   end
   
@@ -21,6 +23,20 @@ class Recurso
 
   def validar_nombre(nombre)
     raise ExcepcionNombreRecurso if nombre == NOMBRE_VACIO
+  end
+  
+  def comprobar_solapamiento_recurso(inicio, fin)
+    intervalos = @reservas
+    intervalos.push(inicio..fin)
+    intervalos && intervalos.flatten!
+    intervalos = intervalos.sort_by {|intervalo| intervalo.min}
+    while intervalos.each_cons(2).any? {|a, b|
+      min_interseccion = [a.min, b.min].max
+      max_interseccion = [a.max, b.max].min
+      interseccion = min_interseccion <= max_interseccion
+      interseccion && raise(ExcepcionSolapamientoRecurso)
+    }
+    end
   end
 
 end
