@@ -12,6 +12,22 @@ describe 'Evento Recurrente' do
     fin_recurrencia = DateTime.now + 30
     EventoRecurrente.new(id, nombre, inicio, fin, frecuencia, fin_recurrencia)
   end
+  
+  it 'Se debe reservar el recurso para todos los intervalos' do
+    id = 'id_1'
+    nombre = 'Evento 1'
+    inicio = DateTime.now
+    fin = inicio
+    frecuencia = double('Frecuencia')
+    allow(frecuencia).to receive(:frecuencia).and_return(1)
+    fin_recurrencia = DateTime.now + 30
+    recurso = double('Recurso 1')
+    allow(recurso).to receive(:nombre).and_return('Recurso 1')
+    expect(recurso).to receive(:reservar).exactly(31).times
+    allow(recurso).to receive(:reservar)
+    evento = EventoRecurrente.new(id, nombre, inicio, fin, frecuencia, fin_recurrencia, recurso)
+    #expect(evento.obtener_intervalo.size).to eq 31
+  end
 
   it 'Error al crear un evento con fin_recurrencia menor a inicio' do
     id = 'id_1'
