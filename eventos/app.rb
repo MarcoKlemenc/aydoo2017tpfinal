@@ -191,4 +191,13 @@ get '/eventos/:id' do
     formateador.dar_formato(salida)
   end
   
+  delete '/recursos/:nombre' do
+    begin
+      nombre_recurso = params[:nombre]
+      repositorio_recursos.eliminar_recurso(nombre_recurso)
+    rescue ExcepcionRecursoInexistente
+      status 404
+    end
+  end
+  
 end
