@@ -65,6 +65,8 @@ post '/eventos' do
     body = formateador.leer(request.body.read)
     nombre_calendario = body['calendario']
     calendario = repositorio_calendarios.obtener_calendario(nombre_calendario)
+    nombre_recurso = body['recurso']
+    recurso = repositorio_recursos.obtener_recurso(nombre_recurso)
     body['inicio'] = DateTime.parse(body['inicio'])
     body['fin'] = DateTime.parse(body['fin'])
     if body['recurrencia']
