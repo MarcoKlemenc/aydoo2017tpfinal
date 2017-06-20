@@ -13,6 +13,7 @@ require_relative 'model/validador_unicidad_evento'
 require_relative 'model/cadena_generacion_eventos'
 
 repositorio_calendarios = ArchivadorRepositorio.cargar || RepositorioCalendarios.new
+repositorio_recursos = RepositorioRecursos.new
 formateador = Formateador.new
 mapeador = MapeadorFrecuencias.new
 cadena = CadenaGeneracionEventos.new
@@ -184,34 +185,32 @@ get '/eventos/:id' do
   rescue ExcepcionEventoInexistente
     status 404
   end
+end
   
-  get '/recursos' do
-    salida = []
-    repositorio_recursos.recursos.values.each {|recurso| salida << recurso.to_h}
-    formateador.dar_formato(salida)
+get '/recursos' do
+  salida = []
+  repositorio_recursos.recursos.values.each {|recurso| salida << recurso.to_h}
+  formateador.dar_formato(salida)
+end
+  
+delete '/recursos/:nombre' do
+  begin
+    nombre_recurso = params[:nombre]
+    repositorio_recursos.eliminar_recurso(nombre_recurso)
+  rescue ExcepcionRecursoInexistente
+    status 404
   end
+end
   
-  delete '/recursos/:nombre' do
-    begin
-      nombre_recurso = params[:nombre]
-      repositorio_recursos.eliminar_recurso(nombre_recurso)
-    rescue ExcepcionRecursoInexistente
-      status 404
-    end
+post '/recursos' do
+  begin
+    request.body.rewind
+    body = formateador.leer(request.body.read)
+    nombre_recurso = body['nombre']
+    recurso = Recurso.new(nombre_recurso)
+    repositorio_recursos.almacenar_recurso(recurso)
+    formateador.dar_formato(recurso.to_h)
+  rescue  ExcepcionUnicidadRecurso
+    status 400
   end
-  
-  post '/recursos' do
-    begin
-      request.body.rewind
-      body = formateador.leer(request.body.read)
-      nombre_recurso = body['nombre']
-      recurso = Recurso.new(nombre_recurso)
-      repositorio_recursos.almacenar_recurso(recurso)
-      formateador.dar_formato(recurso.to_h)
-    rescue  ExcepcionUnicidadRecurso
-      status 400
-    end
-  end
-  
-  
 end
