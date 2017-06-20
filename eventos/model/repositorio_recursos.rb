@@ -8,3 +8,9 @@ class RepositorioRecursos
   def initialize
     @recursos = {}
   end
+
+  def almacenar_recurso(recurso)
+    identificacion = recurso.nombre
+    comprobar_unicidad_recurso(recurso)
+    @recursos[identificacion] = recurso
+  end
