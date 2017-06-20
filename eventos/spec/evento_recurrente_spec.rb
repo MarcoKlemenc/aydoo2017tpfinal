@@ -26,7 +26,6 @@ describe 'Evento Recurrente' do
     expect(recurso).to receive(:reservar).exactly(31).times
     allow(recurso).to receive(:reservar)
     evento = EventoRecurrente.new(id, nombre, inicio, fin, frecuencia, fin_recurrencia, recurso)
-    #expect(evento.obtener_intervalo.size).to eq 31
   end
 
   it 'Error al crear un evento con fin_recurrencia menor a inicio' do

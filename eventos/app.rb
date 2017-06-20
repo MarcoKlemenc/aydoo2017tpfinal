@@ -147,10 +147,7 @@ delete '/eventos/:id' do
   end
   begin
     evento = repositorio_evento.obtener_evento(id_evento)
-    recurso = evento.recurso
-    if not recurso.nil?
-      recurso.eliminar_reserva(evento.inicio, evento.fin)
-    end
+    evento.eliminar_reservas
     repositorio_evento.eliminar_evento(id_evento)
     ArchivadorRepositorio.guardar(repositorio_calendarios)
   rescue

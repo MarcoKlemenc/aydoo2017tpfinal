@@ -76,6 +76,20 @@ describe 'Evento' do
     expect(evento.recurso.nombre).to eq 'Recurso 1'
   end
   
+  it 'Deberia poder eliminar las reservas hechas' do
+    id = 'id_1'
+    nombre = 'Evento 1'
+    inicio = DateTime.now
+    fin = inicio
+    recurso = double('Recurso 1')
+    allow(recurso).to receive(:nombre).and_return('Recurso 1')
+    expect(recurso).to receive(:eliminar_reserva).once
+    allow(recurso).to receive(:reservar)
+    allow(recurso).to receive(:eliminar_reserva)
+    evento = Evento.new(id, nombre, inicio, fin, recurso)
+    evento.eliminar_reservas
+  end
+  
   it 'Al asignar un recurso se realiza la reserva' do
     id = 'id_1'
     nombre = 'Evento 1'

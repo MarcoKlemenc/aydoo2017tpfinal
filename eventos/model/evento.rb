@@ -42,6 +42,12 @@ class Evento
   def obtener_intervalo
     @inicio..@fin
   end
+  
+  def eliminar_reservas
+    if not @recurso.nil?
+      @recurso.eliminar_reserva(@inicio, @fin)
+    end
+  end
 
   private
 
