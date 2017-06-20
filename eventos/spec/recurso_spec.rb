@@ -18,6 +18,14 @@ describe 'Recurso' do
       Recurso.new('')
     end.to raise_error(ExcepcionNombreRecurso)
   end
-
+  
+  it 'Deberia poder reservarse por un intervalo' do
+    nombre = 'Recurso 1'
+    recurso = Recurso.new(nombre)
+    inicio = DateTime.now
+    fin = DateTime.now + 10
+    recurso.reservar(inicio, fin)
+    expect(recurso.reservas[0]).to eq (inicio..fin)
+  end
 
 end

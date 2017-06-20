@@ -13,6 +13,10 @@ class Recurso
     @reservas = []
   end
   
+  def reservar(inicio, fin)
+    @reservas << (inicio..fin)
+  end
+  
   private
 
   def validar_nombre(nombre)
