@@ -184,4 +184,11 @@ get '/eventos/:id' do
   rescue ExcepcionEventoInexistente
     status 404
   end
+  
+  get '/recursos' do
+    salida = []
+    repositorio_recursos.recursos.values.each {|recurso| salida << recurso.to_h}
+    formateador.dar_formato(salida)
+  end
+  
 end
