@@ -25,6 +25,10 @@ class Recurso
     @reservas << (inicio..fin)
   end
   
+  def eliminar_reserva(inicio, fin)
+    reservas.delete(inicio..fin)
+  end
+  
   private
 
   def validar_nombre(nombre)

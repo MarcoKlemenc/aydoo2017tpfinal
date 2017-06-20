@@ -28,6 +28,16 @@ describe 'Recurso' do
     expect(recurso.reservas[0]).to eq (inicio..fin)
   end
   
+  it 'Deberia poder eliminar una reserva' do
+    nombre = 'Recurso 1'
+    recurso = Recurso.new(nombre)
+    inicio = DateTime.now
+    fin = DateTime.now + 10
+    recurso.reservar(inicio, fin)
+    recurso.eliminar_reserva(inicio, fin)
+    expect(recurso.reservas.size).to eq 0
+  end
+  
   it 'Error al almacenar reservas que se solapen' do
     nombre = 'Recurso 1'
     recurso = Recurso.new(nombre)
