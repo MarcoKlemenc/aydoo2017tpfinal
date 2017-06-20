@@ -1,5 +1,5 @@
 require_relative '../model/recurso'
-require_relative '../model/excepcion_solapamiento_recurso'
+require_relative '../model/excepcion_unicidad_recurso'
 
 # Repositorio de recursos
 class RepositorioRecursos
