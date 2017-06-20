@@ -32,7 +32,7 @@ class Recurso
   end
   
   def comprobar_solapamiento_recurso(inicio, fin)
-    intervalos = @reservas
+    intervalos = @reservas.clone
     intervalos.push(inicio..fin)
     intervalos && intervalos.flatten!
     intervalos = intervalos.sort_by {|intervalo| intervalo.min}

@@ -66,7 +66,9 @@ post '/eventos' do
     nombre_calendario = body['calendario']
     calendario = repositorio_calendarios.obtener_calendario(nombre_calendario)
     nombre_recurso = body['recurso']
-    recurso = repositorio_recursos.obtener_recurso(nombre_recurso)
+    if not nombre_recurso.nil?
+      body['recurso'] = repositorio_recursos.obtener_recurso(nombre_recurso)
+    end
     body['inicio'] = DateTime.parse(body['inicio'])
     body['fin'] = DateTime.parse(body['fin'])
     if body['recurrencia']
@@ -81,7 +83,8 @@ post '/eventos' do
           ExcepcionIntervaloMaximo,
           ExcepcionUnicidadEvento,
           ExcepcionSolapamientoEvento,
-          ExcepcionUnicidadGlobalEvento
+          ExcepcionUnicidadGlobalEvento,
+          ExcepcionSolapamientoRecurso
     status 400
   end
 end

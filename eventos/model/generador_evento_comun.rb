@@ -10,7 +10,8 @@ class GeneradorEventoComun < GeneradorEvento
         params['id'],
         params['nombre'],
         params['inicio'],
-        params['fin']
+        params['fin'],
+        params['recurso']
       )
       return evento
     else super(params)

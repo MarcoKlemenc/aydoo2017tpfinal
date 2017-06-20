@@ -15,7 +15,8 @@ class GeneradorEventoRecurrente < GeneradorEvento
         params['inicio'],
         params['fin'],
         frecuencia,
-        params['recurrencia']['fin']
+        params['recurrencia']['fin'],
+        params['recurso']
       )
       return evento
     else super(params)
