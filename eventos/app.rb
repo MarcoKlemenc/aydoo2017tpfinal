@@ -206,6 +206,14 @@ end
 delete '/recursos/:nombre' do
   begin
     nombre_recurso = params[:nombre]
+    recurso = repositorio_recursos.obtener_recurso(nombre_recurso)
+    repositorio_calendarios.calendarios.values.each do |c|
+      c.eventos.values.each do |e|
+        if e.recurso == recurso
+          e.recurso = nil
+        end
+      end
+    end
     repositorio_recursos.eliminar_recurso(nombre_recurso)
   rescue ExcepcionRecursoInexistente
     status 404
