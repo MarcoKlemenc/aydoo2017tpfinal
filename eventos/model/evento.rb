@@ -23,7 +23,10 @@ class Evento
     @nombre = nombre
     @inicio = inicio
     @fin = fin
-    @recurso = recurso
+    if not recurso.nil?
+      recurso.reservar(@inicio, @fin)
+      @recurso = recurso
+    end
   end
 
   def inicio=(value)

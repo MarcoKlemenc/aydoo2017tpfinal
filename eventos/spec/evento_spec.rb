@@ -71,8 +71,21 @@ describe 'Evento' do
     fin = inicio
     recurso = double('Recurso 1')
     allow(recurso).to receive(:nombre).and_return('Recurso 1')
+    allow(recurso).to receive(:reservar)
     evento = Evento.new(id, nombre, inicio, fin, recurso)
     expect(evento.recurso.nombre).to eq 'Recurso 1'
+  end
+  
+  it 'Al asignar un recurso se realiza la reserva' do
+    id = 'id_1'
+    nombre = 'Evento 1'
+    inicio = DateTime.now
+    fin = inicio
+    recurso = double('Recurso 1')
+    allow(recurso).to receive(:nombre).and_return('Recurso 1')
+    expect(recurso).to receive(:reservar).with(inicio, fin)
+    allow(recurso).to receive(:reservar)
+    evento = Evento.new(id, nombre, inicio, fin, recurso)
   end
 
   it 'Deberia poder obtener el intervalo del evento' do
