@@ -50,6 +50,18 @@ class EventoRecurrente < Evento
     end
     intervalos
   end
+  
+  def eliminar_reservas
+    if not @recurso.nil?
+      inicio = @inicio
+      fin = @fin
+      while inicio <= @fin_recurrencia do
+        recurso.eliminar_reserva(inicio, fin)
+        inicio += @frecuencia.frecuencia
+        fin += @frecuencia.frecuencia
+      end
+    end
+  end
 
   private
                                                 

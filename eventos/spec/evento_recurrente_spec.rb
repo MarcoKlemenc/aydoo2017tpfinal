@@ -27,6 +27,23 @@ describe 'Evento Recurrente' do
     allow(recurso).to receive(:reservar)
     evento = EventoRecurrente.new(id, nombre, inicio, fin, frecuencia, fin_recurrencia, recurso)
   end
+  
+  it 'Se deben eliminar todas las reservas' do
+    id = 'id_1'
+    nombre = 'Evento 1'
+    inicio = DateTime.now
+    fin = inicio
+    frecuencia = double('Frecuencia')
+    allow(frecuencia).to receive(:frecuencia).and_return(1)
+    fin_recurrencia = DateTime.now + 30
+    recurso = double('Recurso 1')
+    allow(recurso).to receive(:nombre).and_return('Recurso 1')
+    expect(recurso).to receive(:eliminar_reserva).exactly(31).times
+    allow(recurso).to receive(:reservar)
+    allow(recurso).to receive(:eliminar_reserva)
+    evento = EventoRecurrente.new(id, nombre, inicio, fin, frecuencia, fin_recurrencia, recurso)
+    evento.eliminar_reservas
+  end
 
   it 'Error al crear un evento con fin_recurrencia menor a inicio' do
     id = 'id_1'
