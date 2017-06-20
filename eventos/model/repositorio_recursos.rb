@@ -24,4 +24,10 @@ class RepositorioRecursos
     @recursos[identificacion] || raise(ExcepcionRecursoInexistente)
   end
   
+  def eliminar_recurso(identificacion)
+    unless @recursos.delete(identificacion)
+      raise ExcepcionRecursoInexistente
+    end
+  end
+  
 end
