@@ -8,7 +8,6 @@ require_relative 'model/calendario'
 require_relative 'model/evento'
 require_relative 'model/evento_recurrente'
 require_relative 'model/formateador'
-require_relative 'model/mapeador_frecuencias'
 require_relative 'model/validador_unicidad_evento'
 require_relative 'model/cadena_generacion_eventos'
 
@@ -18,7 +17,6 @@ archivo_recursos = "recursos.txt"
 repositorio_calendarios = ArchivadorRepositorio.cargar(archivo_calendarios) || RepositorioCalendarios.new
 repositorio_recursos = ArchivadorRepositorio.cargar(archivo_recursos) || RepositorioRecursos.new
 formateador = Formateador.new
-mapeador = MapeadorFrecuencias.new
 cadena = CadenaGeneracionEventos.new
 
 post '/calendarios' do
