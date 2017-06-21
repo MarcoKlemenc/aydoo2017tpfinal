@@ -142,6 +142,7 @@ put '/eventos' do
       status 400
     end
     ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
+    ArchivadorRepositorio.guardar(repositorio_recursos, archivo_recursos)
 
   rescue ExcepcionCalendarioInexistente,
       ExcepcionEventoInexistente,
@@ -150,6 +151,7 @@ put '/eventos' do
       ExcepcionSolapamientoEvento,
       ExcepcionRecursoInexistente,
       ExcepcionSolapamientoRecurso
+    repositorio_recursos = ArchivadorRepositorio.cargar(archivo_recursos) || RepositorioRecursos.new
     status 400
   end
 end
