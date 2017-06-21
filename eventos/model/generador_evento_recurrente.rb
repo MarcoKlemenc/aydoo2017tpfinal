@@ -1,5 +1,6 @@
 require_relative '../model/evento_recurrente'
 require_relative '../model/generador_evento'
+require_relative '../model/mapeador_frecuencias'
 
 # Clase para generacion de eventos recurrentes mediante Chain of Responsibility
 class GeneradorEventoRecurrente < GeneradorEvento

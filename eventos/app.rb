@@ -69,6 +69,7 @@ post '/eventos' do
   begin
     request.body.rewind
     body = formateador.leer(request.body.read)
+    ValidadorUnicidadEvento.validar(repositorio_calendarios.calendarios.values, body['id'])
     nombre_calendario = body['calendario']
     calendario = repositorio_calendarios.obtener_calendario(nombre_calendario)
     nombre_recurso = body['recurso']
@@ -81,7 +82,7 @@ post '/eventos' do
       body['recurrencia']['fin'] = DateTime.parse(body['recurrencia']['fin'])
     end
     evento = cadena.generar_evento(body)
-    ValidadorUnicidadEvento.validar(repositorio_calendarios.calendarios.values, evento.id)
+    
     calendario.almacenar_evento(evento)
     ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
     ArchivadorRepositorio.guardar(repositorio_recursos, archivo_recursos)
