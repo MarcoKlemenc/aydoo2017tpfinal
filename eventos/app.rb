@@ -125,7 +125,7 @@ put '/eventos' do
     body['fin'] = body.key?('fin') ? DateTime.parse(body['fin']) : fin_original
     
     nombre_recurso = body['recurso']
-    if (not nombre_recurso.nil?) || (not evento_original.recurso.nil?)
+    if not (nombre_recurso.nil? && evento_original.recurso.nil?)
       body['recurso'] = body.key?('recurso') ? repositorio_recursos.obtener_recurso(nombre_recurso) : evento_original.recurso
     end
 
@@ -149,7 +149,8 @@ put '/eventos' do
           ExcepcionEventoInexistente,
           ExcepcionIntervaloErroneo,
           ExcepcionIntervaloMaximo,
-          ExcepcionSolapamientoEvento
+          ExcepcionSolapamientoEvento,
+          ExcepcionRecursoInexistente
     status 400
   end
 end
