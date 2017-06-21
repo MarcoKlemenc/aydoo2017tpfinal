@@ -17,5 +17,4 @@ class GeneradorEventoComun < GeneradorEvento
       super(params)
     end
   end
-
 end

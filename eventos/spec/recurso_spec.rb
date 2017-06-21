@@ -48,5 +48,4 @@ describe 'Recurso' do
       recurso.reservar(inicio, fin)
     end.to raise_error(ExcepcionSolapamientoRecurso)
   end
-
 end

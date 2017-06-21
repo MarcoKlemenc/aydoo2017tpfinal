@@ -25,5 +25,4 @@ describe 'Generador Evento Recurrente' do
     generador = GeneradorEventoRecurrente.new (siguiente)
     expect(generador.generar_evento(hash)).to eq dos
   end
-
 end

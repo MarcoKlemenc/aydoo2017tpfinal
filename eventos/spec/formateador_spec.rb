@@ -21,5 +21,4 @@ describe 'Formateador' do
     formateador = Formateador.new
     expect(formateador.leer(texto)).to eq hash
   end
-
 end

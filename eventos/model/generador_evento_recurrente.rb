@@ -22,5 +22,4 @@ class GeneradorEventoRecurrente < GeneradorEvento
       super(params)
     end
   end
-
 end

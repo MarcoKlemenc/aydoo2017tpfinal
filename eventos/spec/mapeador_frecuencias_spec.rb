@@ -25,5 +25,4 @@ describe 'Mapeador Frecuencias' do
     frecuencia_anual = 365
     expect(mapeador.frecuencias.fetch("anual").frecuencia).to eq frecuencia_anual
   end
-
 end

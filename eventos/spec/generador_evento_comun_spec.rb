@@ -21,5 +21,4 @@ describe 'Generador Evento Comun' do
     generador = GeneradorEventoComun.new (siguiente)
     expect(generador.generar_evento(hash)).to eq dos
   end
-
 end

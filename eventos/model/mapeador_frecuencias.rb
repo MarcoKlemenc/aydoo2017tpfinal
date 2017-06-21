@@ -14,5 +14,4 @@ class MapeadorFrecuencias
     @frecuencias["mensual"] = FrecuenciaMensual.new
     @frecuencias["anual"] = FrecuenciaAnual.new
   end
-
 end

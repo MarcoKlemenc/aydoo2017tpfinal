@@ -13,5 +13,4 @@ class GeneradorEvento
       siguiente.generar_evento(params)
     end
   end
-
 end

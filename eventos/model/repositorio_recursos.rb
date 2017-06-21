@@ -29,5 +29,4 @@ class RepositorioRecursos
       raise ExcepcionRecursoInexistente
     end
   end
-
 end

@@ -22,5 +22,4 @@ describe 'Generador Evento' do
     generador = GeneradorEvento.new (nil)
     expect(generador.generar_evento(uno)).to eq nil
   end
-
 end

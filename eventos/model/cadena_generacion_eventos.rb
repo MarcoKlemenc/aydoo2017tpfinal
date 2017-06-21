@@ -16,5 +16,4 @@ class CadenaGeneracionEventos
   def generar_evento(params)
     @generadores.first.generar_evento(params)
   end
-
 end

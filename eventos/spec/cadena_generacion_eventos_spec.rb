@@ -6,6 +6,4 @@ describe 'Cadena Generacion Eventos' do
     cadena = CadenaGeneracionEventos.new
     expect(cadena.generadores.size).to eq 2
   end
-
-
 end

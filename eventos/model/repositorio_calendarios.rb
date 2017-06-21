@@ -37,5 +37,4 @@ class RepositorioCalendarios
   def estandarizar_identificacion(identificacion)
     identificacion.downcase
   end
-
 end

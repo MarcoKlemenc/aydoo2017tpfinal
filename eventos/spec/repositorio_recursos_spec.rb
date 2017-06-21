@@ -60,5 +60,4 @@ describe 'Repositorio Recursos' do
       repositorio.eliminar_recurso('inexistente')
     end.to raise_error(ExcepcionRecursoInexistente)
   end
-
 end

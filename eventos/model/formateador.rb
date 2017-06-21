@@ -10,5 +10,4 @@ class Formateador
   def leer(texto)
     JSON.parse(texto)
   end
-
 end
