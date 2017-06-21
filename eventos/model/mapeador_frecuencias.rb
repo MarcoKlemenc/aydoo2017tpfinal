@@ -6,7 +6,7 @@ require_relative './frecuencia_anual'
 # Se encarga de mapear un tipo de frecuencia al string correspondiente
 class MapeadorFrecuencias
   attr_reader :frecuencias
-  
+
   def initialize
     @frecuencias = {}
     @frecuencias["diaria"] = FrecuenciaDiaria.new
@@ -14,5 +14,5 @@ class MapeadorFrecuencias
     @frecuencias["mensual"] = FrecuenciaMensual.new
     @frecuencias["anual"] = FrecuenciaAnual.new
   end
-  
+
 end

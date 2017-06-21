@@ -12,13 +12,13 @@ describe 'Recurso' do
     recurso = Recurso.new(nombre)
     expect(recurso.nombre).to eq nombre
   end
-  
+
   it 'Error al crear un recurso sin nombre' do
     expect do
       Recurso.new('')
     end.to raise_error(ExcepcionNombreRecurso)
   end
-  
+
   it 'Deberia poder reservarse por un intervalo' do
     nombre = 'Recurso 1'
     recurso = Recurso.new(nombre)
@@ -27,7 +27,7 @@ describe 'Recurso' do
     recurso.reservar(inicio, fin)
     expect(recurso.reservas[0]).to eq (inicio..fin)
   end
-  
+
   it 'Deberia poder eliminar una reserva' do
     nombre = 'Recurso 1'
     recurso = Recurso.new(nombre)
@@ -37,7 +37,7 @@ describe 'Recurso' do
     recurso.eliminar_reserva(inicio, fin)
     expect(recurso.reservas.size).to eq 0
   end
-  
+
   it 'Error al almacenar reservas que se solapen' do
     nombre = 'Recurso 1'
     recurso = Recurso.new(nombre)

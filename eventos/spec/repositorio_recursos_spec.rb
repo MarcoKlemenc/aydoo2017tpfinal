@@ -30,7 +30,7 @@ describe 'Repositorio Recursos' do
       repositorio.almacenar_recurso(otro_recurso)
     end.to raise_error(ExcepcionUnicidadRecurso)
   end
-  
+
   it 'Deberia poder obtener un recurso existente' do
     recurso = double('Recurso 1')
     allow(recurso).to receive(:nombre).and_return('Recurso 1')
@@ -45,7 +45,7 @@ describe 'Repositorio Recursos' do
       repositorio.obtener_recurso('inexistente')
     end.to raise_error(ExcepcionRecursoInexistente)
   end
-  
+
   it 'Deberia poder eliminar un recurso existente' do
     recurso = double('Recurso 1')
     allow(recurso).to receive(:nombre).and_return('Recurso 1')

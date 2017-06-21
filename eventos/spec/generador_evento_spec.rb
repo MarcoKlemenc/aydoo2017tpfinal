@@ -7,7 +7,7 @@ describe 'Generador Evento' do
     generador = GeneradorEvento.new (uno)
     expect(generador.siguiente).to eq uno
   end
-  
+
   it 'El generador de evento llama al generar del siguiente' do
     uno = 1
     dos = 2
@@ -16,7 +16,7 @@ describe 'Generador Evento' do
     generador = GeneradorEvento.new (siguiente)
     expect(generador.generar_evento(uno)).to eq dos
   end
-  
+
   it 'Devuelve nil si no tiene un siguiente' do
     uno = 1
     generador = GeneradorEvento.new (nil)

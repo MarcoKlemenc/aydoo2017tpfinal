@@ -10,31 +10,31 @@ class Recurso
 
   def to_h
     {
-      "nombre" => @nombre
+        "nombre" => @nombre
     }
   end
-  
+
   def initialize(nombre)
     validar_nombre(nombre)
     @nombre = nombre
     @reservas = []
   end
-  
+
   def reservar(inicio, fin)
     comprobar_solapamiento_recurso(inicio, fin)
     @reservas << (inicio..fin)
   end
-  
+
   def eliminar_reserva(inicio, fin)
     reservas.delete(inicio..fin)
   end
-  
+
   private
 
   def validar_nombre(nombre)
     raise ExcepcionNombreRecurso if nombre == NOMBRE_VACIO
   end
-  
+
   def comprobar_solapamiento_recurso(inicio, fin)
     intervalos = @reservas.clone
     intervalos.push(inicio..fin)

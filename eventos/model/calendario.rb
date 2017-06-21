@@ -12,7 +12,7 @@ class Calendario
 
   def to_h
     {
-      "nombre" => @nombre
+        "nombre" => @nombre
     }
   end
 

@@ -9,10 +9,10 @@ describe 'Generador Evento Comun' do
               'nombre' => "Evento 1",
               'inicio' => DateTime.now,
               'fin' => DateTime.now,
-             }
+    }
     expect(generador.generar_evento(params).nombre).to eq "Evento 1"
   end
-  
+
   it 'Llama al generar del siguiente al no pasarle id' do
     hash = {}
     dos = 2
@@ -21,5 +21,5 @@ describe 'Generador Evento Comun' do
     generador = GeneradorEventoComun.new (siguiente)
     expect(generador.generar_evento(hash)).to eq dos
   end
-  
+
 end

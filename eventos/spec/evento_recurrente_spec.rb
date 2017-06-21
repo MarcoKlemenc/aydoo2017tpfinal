@@ -12,7 +12,7 @@ describe 'Evento Recurrente' do
     fin_recurrencia = DateTime.now + 30
     EventoRecurrente.new(id, nombre, inicio, fin, frecuencia, fin_recurrencia)
   end
-  
+
   it 'Se debe reservar el recurso para todos los intervalos' do
     id = 'id_1'
     nombre = 'Evento 1'
@@ -27,7 +27,7 @@ describe 'Evento Recurrente' do
     allow(recurso).to receive(:reservar)
     evento = EventoRecurrente.new(id, nombre, inicio, fin, frecuencia, fin_recurrencia, recurso)
   end
-  
+
   it 'Se deben eliminar todas las reservas' do
     id = 'id_1'
     nombre = 'Evento 1'

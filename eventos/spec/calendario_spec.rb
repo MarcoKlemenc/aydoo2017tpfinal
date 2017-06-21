@@ -176,9 +176,9 @@ describe 'Calendario' do
     dia_martes_16 = dia_martes_09 + 7
 
     intervalo_primer_evento = [
-      dia_lunes_01..dia_martes_02,
-      dia_lunes_08..dia_martes_09,
-      dia_lunes_15..dia_martes_16
+        dia_lunes_01..dia_martes_02,
+        dia_lunes_08..dia_martes_09,
+        dia_lunes_15..dia_martes_16
     ]
     primer_evento = double('Evento 1')
     allow(primer_evento).to receive(:id).and_return('id_1')
@@ -191,8 +191,8 @@ describe 'Calendario' do
     dia_viernes_12 = dia_viernes_05 + 7
 
     intervalo_segundo_evento = [
-      dia_jueves_04..dia_viernes_05,
-      dia_jueves_11..dia_viernes_12
+        dia_jueves_04..dia_viernes_05,
+        dia_jueves_11..dia_viernes_12
     ]
     segundo_evento = double('Evento 2')
     allow(segundo_evento).to receive(:id).and_return('id_2')

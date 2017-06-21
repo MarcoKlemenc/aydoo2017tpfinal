@@ -11,7 +11,7 @@ describe 'Formateador' do
     formateador = Formateador.new
     expect(formateador.dar_formato(hash)).to eq texto
   end
-  
+
   it 'Deberia dar un hash a partir de un texto con formato' do
     texto = '{
   "a": "b",

@@ -10,10 +10,10 @@ class Evento
 
   def to_h
     {
-      'id' => @id,
-      'nombre' => @nombre,
-      'inicio' => @inicio,
-      'fin' => @fin
+        'id' => @id,
+        'nombre' => @nombre,
+        'inicio' => @inicio,
+        'fin' => @fin
     }
   end
 
@@ -42,7 +42,7 @@ class Evento
   def obtener_intervalo
     @inicio..@fin
   end
-  
+
   def eliminar_reservas
     if not @recurso.nil?
       @recurso.eliminar_reserva(@inicio, @fin)

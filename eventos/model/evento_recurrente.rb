@@ -8,14 +8,14 @@ class EventoRecurrente < Evento
 
   def to_h
     {
-      'id' => @id,
-      'nombre' => @nombre,
-      'inicio' => @inicio,
-      'fin' => @fin,
-      'recurrente' => {
-        'frecuencia' => @frecuencia,
-        'fin' => @fin_recurrencia
-      }
+        'id' => @id,
+        'nombre' => @nombre,
+        'inicio' => @inicio,
+        'fin' => @fin,
+        'recurrente' => {
+            'frecuencia' => @frecuencia,
+            'fin' => @fin_recurrencia
+        }
     }
   end
 
@@ -50,7 +50,7 @@ class EventoRecurrente < Evento
     end
     intervalos
   end
-  
+
   def eliminar_reservas
     if not @recurso.nil?
       inicio = @inicio
@@ -64,7 +64,7 @@ class EventoRecurrente < Evento
   end
 
   private
-                                                
+
   def reservar_recurrentes(recurso)
     inicio = @inicio + @frecuencia.frecuencia
     fin = @fin + @frecuencia.frecuencia

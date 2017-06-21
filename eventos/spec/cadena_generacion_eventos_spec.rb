@@ -7,5 +7,5 @@ describe 'Cadena Generacion Eventos' do
     expect(cadena.generadores.size).to eq 2
   end
 
-  
+
 end

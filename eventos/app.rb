@@ -30,8 +30,8 @@ post '/calendarios' do
     repositorio_calendarios.almacenar_calendario(calendario)
     ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
     formateador.dar_formato(calendario.to_h)
-  rescue  ExcepcionUnicidadCalendario,
-          ExcepcionNombreCalendario
+  rescue ExcepcionUnicidadCalendario,
+      ExcepcionNombreCalendario
     status 400
   end
 end
@@ -87,14 +87,14 @@ post '/eventos' do
     calendario.almacenar_evento(evento)
     ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
     ArchivadorRepositorio.guardar(repositorio_recursos, archivo_recursos)
-  rescue  ExcepcionCalendarioInexistente,
-          ExcepcionIntervaloErroneo,
-          ExcepcionIntervaloMaximo,
-          ExcepcionUnicidadEvento,
-          ExcepcionSolapamientoEvento,
-          ExcepcionUnicidadGlobalEvento,
-          ExcepcionRecursoInexistente,
-          ExcepcionSolapamientoRecurso
+  rescue ExcepcionCalendarioInexistente,
+      ExcepcionIntervaloErroneo,
+      ExcepcionIntervaloMaximo,
+      ExcepcionUnicidadEvento,
+      ExcepcionSolapamientoEvento,
+      ExcepcionUnicidadGlobalEvento,
+      ExcepcionRecursoInexistente,
+      ExcepcionSolapamientoRecurso
     repositorio_recursos = ArchivadorRepositorio.cargar(archivo_recursos) || RepositorioRecursos.new
     status 400
   end
@@ -123,7 +123,7 @@ put '/eventos' do
     body['nombre'] = body.key?('nombre') ? body['nombre'] : nombre_original
     body['inicio'] = body.key?('inicio') ? DateTime.parse(body['inicio']) : inicio_original
     body['fin'] = body.key?('fin') ? DateTime.parse(body['fin']) : fin_original
-    
+
     nombre_recurso = body['recurso']
     if not (nombre_recurso.nil? && evento_original.recurso.nil?)
       body['recurso'] = body.key?('recurso') ? repositorio_recursos.obtener_recurso(nombre_recurso) : evento_original.recurso
@@ -133,10 +133,10 @@ put '/eventos' do
       body['recurrencia']['frecuencia'] = body.key?('recurrencia') && body['recurrencia'].key?('frecuencia') ? body['recurrencia']['frecuencia'] : frecuencia_original
       body['recurrencia']['fin'] = body.key?('recurrencia') && body['recurrencia'].key?('fin') ? DateTime.parse(body['recurrencia']['fin']) : fin_recurrencia_original
     end
-    
+
     repositorio_evento.eliminar_evento(id_evento)
     evento_reemplazante = cadena.generar_evento(body)
-    
+
     begin
       repositorio_evento.almacenar_evento(evento_reemplazante)
     rescue
@@ -145,13 +145,13 @@ put '/eventos' do
     end
     ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
 
-  rescue  ExcepcionCalendarioInexistente,
-          ExcepcionEventoInexistente,
-          ExcepcionIntervaloErroneo,
-          ExcepcionIntervaloMaximo,
-          ExcepcionSolapamientoEvento,
-          ExcepcionRecursoInexistente,
-          ExcepcionSolapamientoRecurso
+  rescue ExcepcionCalendarioInexistente,
+      ExcepcionEventoInexistente,
+      ExcepcionIntervaloErroneo,
+      ExcepcionIntervaloMaximo,
+      ExcepcionSolapamientoEvento,
+      ExcepcionRecursoInexistente,
+      ExcepcionSolapamientoRecurso
     status 400
   end
 end
@@ -211,13 +211,13 @@ get '/eventos/:id' do
     status 404
   end
 end
-  
+
 get '/recursos' do
   salida = []
   repositorio_recursos.recursos.values.each {|recurso| salida << recurso.to_h}
   formateador.dar_formato(salida)
 end
-  
+
 delete '/recursos/:nombre' do
   begin
     nombre_recurso = params[:nombre]
@@ -235,7 +235,7 @@ delete '/recursos/:nombre' do
     status 404
   end
 end
-  
+
 post '/recursos' do
   begin
     request.body.rewind
@@ -245,7 +245,7 @@ post '/recursos' do
     repositorio_recursos.almacenar_recurso(recurso)
     ArchivadorRepositorio.guardar(repositorio_recursos, archivo_recursos)
     formateador.dar_formato(recurso.to_h)
-  rescue  ExcepcionUnicidadRecurso
+  rescue ExcepcionUnicidadRecurso
     status 400
   end
 end

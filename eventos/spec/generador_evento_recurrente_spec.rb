@@ -7,16 +7,16 @@ describe 'Generador Evento Recurrente' do
     generador = GeneradorEventoRecurrente.new (uno)
     recurrencia = {'frecuencia' => "semanal",
                    'fin' => DateTime.now + 1
-                  }
+    }
     params = {'id' => "id_1",
               'nombre' => "Evento 1",
               'inicio' => DateTime.now,
               'fin' => DateTime.now,
               'recurrencia' => recurrencia
-             }
+    }
     expect(generador.generar_evento(params).nombre).to eq "Evento 1"
   end
-  
+
   it 'Llama al generar del siguiente al no pasarle recurrencia' do
     hash = {}
     dos = 2
@@ -25,5 +25,5 @@ describe 'Generador Evento Recurrente' do
     generador = GeneradorEventoRecurrente.new (siguiente)
     expect(generador.generar_evento(hash)).to eq dos
   end
-  
+
 end

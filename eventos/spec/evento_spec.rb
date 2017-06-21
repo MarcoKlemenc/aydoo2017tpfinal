@@ -9,7 +9,7 @@ describe 'Evento' do
     fin = inicio
     Evento.new(id, nombre, inicio, fin)
   end
-  
+
   it 'Se debe crear un evento a partir de un id, nombre, inicio y fin sin recurso' do
     id = 'id_1'
     nombre = 'Evento 1'
@@ -63,7 +63,7 @@ describe 'Evento' do
     evento = Evento.new(id, nombre, inicio, fin)
     expect(evento.fin).to eq fin
   end
-  
+
   it 'Deberia poder obtener el recurso' do
     id = 'id_1'
     nombre = 'Evento 1'
@@ -75,7 +75,7 @@ describe 'Evento' do
     evento = Evento.new(id, nombre, inicio, fin, recurso)
     expect(evento.recurso.nombre).to eq 'Recurso 1'
   end
-  
+
   it 'Deberia poder eliminar las reservas hechas' do
     id = 'id_1'
     nombre = 'Evento 1'
@@ -89,7 +89,7 @@ describe 'Evento' do
     evento = Evento.new(id, nombre, inicio, fin, recurso)
     evento.eliminar_reservas
   end
-  
+
   it 'Al asignar un recurso se realiza la reserva' do
     id = 'id_1'
     nombre = 'Evento 1'
