@@ -95,6 +95,7 @@ post '/eventos' do
           ExcepcionUnicidadGlobalEvento,
           ExcepcionRecursoInexistente,
           ExcepcionSolapamientoRecurso
+    repositorio_recursos = ArchivadorRepositorio.cargar(archivo_recursos) || RepositorioRecursos.new
     status 400
   end
 end
