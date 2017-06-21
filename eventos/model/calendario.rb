@@ -34,7 +34,10 @@ class Calendario
   end
 
   def eliminar_evento(identificacion)
-    raise ExcepcionEventoInexistente unless @eventos.delete(identificacion)
+    evento = @eventos[identificacion]
+    raise ExcepcionEventoInexistente if evento.nil?
+    evento.eliminar_reservas
+    @eventos.delete(identificacion)
   end
 
   private

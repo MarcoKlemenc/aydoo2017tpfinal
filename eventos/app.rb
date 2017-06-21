@@ -123,15 +123,20 @@ put '/eventos' do
     body['nombre'] = body.key?('nombre') ? body['nombre'] : nombre_original
     body['inicio'] = body.key?('inicio') ? DateTime.parse(body['inicio']) : inicio_original
     body['fin'] = body.key?('fin') ? DateTime.parse(body['fin']) : fin_original
+    
+    nombre_recurso = body['recurso']
+    if not nombre_recurso.nil?
+      body['recurso'] = repositorio_recursos.obtener_recurso(nombre_recurso)
+    end
 
     if body.key?('recurrencia')
-      body['recurrencia']['frecuencia'] = body.key?('recurrencia') && body['recurrencia'].key?('frecuencia') ? mapeador.frecuencias[body['recurrencia']['frecuencia']] : frecuencia_original
+      body['recurrencia']['frecuencia'] = body.key?('recurrencia') && body['recurrencia'].key?('frecuencia') ? body['recurrencia']['frecuencia'] : frecuencia_original
       body['recurrencia']['fin'] = body.key?('recurrencia') && body['recurrencia'].key?('fin') ? DateTime.parse(body['recurrencia']['fin']) : fin_recurrencia_original
     end
     
-    evento = cadena.generar_evento(body)
-    
     repositorio_evento.eliminar_evento(id_evento)
+    evento_reemplazante = cadena.generar_evento(body)
+    
     begin
       repositorio_evento.almacenar_evento(evento_reemplazante)
     rescue
@@ -158,7 +163,6 @@ delete '/eventos/:id' do
   end
   begin
     evento = repositorio_evento.obtener_evento(id_evento)
-    evento.eliminar_reservas
     repositorio_evento.eliminar_evento(id_evento)
     ArchivadorRepositorio.guardar(repositorio_calendarios, archivo_calendarios)
     ArchivadorRepositorio.guardar(repositorio_recursos, archivo_recursos)
