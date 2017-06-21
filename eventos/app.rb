@@ -150,7 +150,8 @@ put '/eventos' do
           ExcepcionIntervaloErroneo,
           ExcepcionIntervaloMaximo,
           ExcepcionSolapamientoEvento,
-          ExcepcionRecursoInexistente
+          ExcepcionRecursoInexistente,
+          ExcepcionSolapamientoRecurso
     status 400
   end
 end
