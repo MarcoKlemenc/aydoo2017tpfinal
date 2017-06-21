@@ -9,12 +9,16 @@ class Evento
   attr_accessor :nombre, :inicio, :fin, :recurso
 
   def to_h
-    {
+    hash = {
         'id' => @id,
         'nombre' => @nombre,
         'inicio' => @inicio,
         'fin' => @fin
     }
+    if @recurso
+      hash['recurso'] = @recurso.nombre
+    end
+    hash
   end
 
   def initialize(id, nombre, inicio, fin, recurso=nil)

@@ -7,16 +7,12 @@ class EventoRecurrente < Evento
   attr_accessor :fin_recurrencia
 
   def to_h
-    {
-        'id' => @id,
-        'nombre' => @nombre,
-        'inicio' => @inicio,
-        'fin' => @fin,
-        'recurrente' => {
-            'frecuencia' => @frecuencia,
-            'fin' => @fin_recurrencia
-        }
+    hash = super
+    hash['recurrente'] = {
+        'frecuencia' => @frecuencia,
+        'fin' => @fin_recurrencia
     }
+    hash
   end
 
   def initialize(id, nombre, inicio, fin, frecuencia, fin_recurrencia, recurso=nil)
