@@ -23,7 +23,7 @@ class Evento
     @nombre = nombre
     @inicio = inicio
     @fin = fin
-    if not recurso.nil?
+    if recurso
       recurso.reservar(@inicio, @fin)
       @recurso = recurso
     end
@@ -44,7 +44,7 @@ class Evento
   end
 
   def eliminar_reservas
-    if not @recurso.nil?
+    if @recurso
       @recurso.eliminar_reserva(@inicio, @fin)
     end
   end

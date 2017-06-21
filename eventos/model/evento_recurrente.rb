@@ -24,7 +24,7 @@ class EventoRecurrente < Evento
     validar_intervalo_recurrencia(inicio, fin_recurrencia)
     @frecuencia = frecuencia
     @fin_recurrencia = fin_recurrencia
-    if not recurso.nil?
+    if recurso
       reservar_recurrentes(recurso)
     end
   end
@@ -52,7 +52,7 @@ class EventoRecurrente < Evento
   end
 
   def eliminar_reservas
-    if not @recurso.nil?
+    if @recurso
       inicio = @inicio
       fin = @fin
       while inicio <= @fin_recurrencia do

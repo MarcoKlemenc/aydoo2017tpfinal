@@ -1,12 +1,9 @@
 require_relative '../model/excepcion_nombre_recurso'
 require_relative '../model/excepcion_solapamiento_recurso'
 
-NOMBRE_VACIO = ''.freeze
-
 # Representa un recurso
 class Recurso
-  attr_reader :nombre
-  attr_reader :reservas
+  attr_reader :nombre, :reservas
 
   def to_h
     {

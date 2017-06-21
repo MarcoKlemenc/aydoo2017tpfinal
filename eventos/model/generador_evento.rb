@@ -8,9 +8,9 @@ class GeneradorEvento
 
   def generar_evento(params)
     if siguiente.nil?
-      return nil
+      nil
     else
-      return siguiente.generar_evento(params)
+      siguiente.generar_evento(params)
     end
   end
 

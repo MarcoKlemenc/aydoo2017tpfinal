@@ -9,7 +9,7 @@ class GeneradorEventoRecurrente < GeneradorEvento
       mapeador = MapeadorFrecuencias.new
       frecuencia_evento = params['recurrencia']['frecuencia']
       frecuencia = mapeador.frecuencias[frecuencia_evento]
-      evento = EventoRecurrente.new(
+      EventoRecurrente.new(
           params['id'],
           params['nombre'],
           params['inicio'],
@@ -18,7 +18,6 @@ class GeneradorEventoRecurrente < GeneradorEvento
           params['recurrencia']['fin'],
           params['recurso']
       )
-      return evento
     else
       super(params)
     end

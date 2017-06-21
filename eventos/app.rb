@@ -72,7 +72,7 @@ post '/eventos' do
     nombre_calendario = body['calendario']
     calendario = repositorio_calendarios.obtener_calendario(nombre_calendario)
     nombre_recurso = body['recurso']
-    if not nombre_recurso.nil?
+    if nombre_recurso
       body['recurso'] = repositorio_recursos.obtener_recurso(nombre_recurso)
     end
     body['inicio'] = DateTime.parse(body['inicio'])
@@ -123,7 +123,7 @@ put '/eventos' do
     body['fin'] = body.key?('fin') ? DateTime.parse(body['fin']) : fin_original
 
     nombre_recurso = body['recurso']
-    if not (nombre_recurso.nil? && evento_original.recurso.nil?)
+    if nombre_recurso || evento_original.recurso
       body['recurso'] = body.key?('recurso') ? repositorio_recursos.obtener_recurso(nombre_recurso) : evento_original.recurso
     end
 

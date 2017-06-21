@@ -6,14 +6,13 @@ class GeneradorEventoComun < GeneradorEvento
 
   def generar_evento(params)
     if params.key?('id')
-      evento = Evento.new(
+      Evento.new(
           params['id'],
           params['nombre'],
           params['inicio'],
           params['fin'],
           params['recurso']
       )
-      return evento
     else
       super(params)
     end
