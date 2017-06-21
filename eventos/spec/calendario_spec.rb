@@ -137,6 +137,7 @@ describe 'Calendario' do
     intervalo = DateTime.now..DateTime.now
     evento = double('Evento 1')
     allow(evento).to receive(:id).and_return('id_1')
+    allow(evento).to receive(:eliminar_reservas)
     allow(evento).to receive(:obtener_intervalo).and_return(intervalo)
     calendario = Calendario.new(nombre_calendario)
     calendario.almacenar_evento(evento)
